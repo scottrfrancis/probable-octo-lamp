@@ -27,7 +27,6 @@ start_date = end_date - timedelta(weeks=weeks_lookback)
 
 def fetch_prices(symbol, data_source, start_date, end_date, api_key):
     price = web.DataReader(name=symbol, data_source=data_source, start=start_date, end=end_date, api_key=api_key)
-    print(price.shape)
 
     price.sort_index()
     price = price.dropna()
@@ -59,7 +58,7 @@ def decorate_with_studies(price):
     price['ma50-1'] = price['ma50'] - price['ma50'].shift(periods=1)
 
 decorate_with_studies(price)
-price.head()
+# price.head()
 
 
 def find_buy_crosses(price):
