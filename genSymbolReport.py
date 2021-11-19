@@ -122,7 +122,7 @@ def make_recommendation(buy_dates, sell_dates, end_date, lookback=90):
         rec_color = 'red'
         recommendation_date = last_sell_date
 
-    recommendation = f"As of {recommendation_date}, {recommendation}" # {symbol}"
+    recommendation = f"{recommendation} on {recommendation_date.date()}"
 
     return recommendation, rec_color
 
@@ -131,7 +131,7 @@ buys.sort()
 sells = np.append(ma_sell_crosses, sell_dates)
 sells.sort()
 recommendation, rec_color = make_recommendation(buys, sell_dates, end_date)
-recommendation = recommendation + f" for {symbol}"
+recommendation = f"{symbol}: {recommendation}"
 print(recommendation)
 
 
