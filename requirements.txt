@@ -1,0 +1,5 @@
+panda
+pandas_datareader
+matplotlib
+scipy
+cython
