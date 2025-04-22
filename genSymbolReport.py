@@ -63,7 +63,7 @@ decorate_with_studies(price)
 
 def find_buy_crosses(price):
     ma_buys = (price['ma50'] > price['ma200']) & (price['ma50-1'] > 0)
-    ma_buys = ma_buys ^ ma_buys.shift(periods=-1, fill_value=ma_buys[-1])
+    ma_buys = ma_buys ^ ma_buys.shift(periods=-1, fill_value=ma_buys.iloc[-1])
     price['ma_buys'] = ma_buys
     ma_buy_crosses = price[price['ma_buys']].index.values   
 
@@ -71,7 +71,7 @@ def find_buy_crosses(price):
 
 def find_sell_crosses(price):
     ma_sells = (price['ma50'] < price['ma200']) & (price['ma50-1'] < 0)
-    ma_sells = ma_sells ^ ma_sells.shift(periods=-1, fill_value=ma_sells[-1])
+    ma_sells = ma_sells ^ ma_sells.shift(periods=-1, fill_value=ma_sells.iloc[-1])
     price['ma_sells'] = ma_sells
     ma_sell_crosses = price[price['ma_sells']].index.values
 
@@ -122,7 +122,7 @@ def make_recommendation(buy_dates, sell_dates, end_date, lookback=90):
         rec_color = 'red'
         recommendation_date = last_sell_date
 
-    recommendation = f"{recommendation} on {recommendation_date.date()}"
+    recommendation = f"{recommendation},{recommendation_date.date()}"
 
     return recommendation, rec_color
 
@@ -131,7 +131,7 @@ buys.sort()
 sells = np.append(ma_sell_crosses, sell_dates)
 sells.sort()
 recommendation, rec_color = make_recommendation(buys, sell_dates, end_date)
-recommendation = f"{symbol}: {recommendation}"
+recommendation = f"{symbol},{recommendation}"
 print(recommendation)
 
 
@@ -188,6 +188,6 @@ def make_plot(price, recommendation, symbol):
 
     save_file = os.path.join( "analyses", f"{symbol}-{end_date}.pdf")
     plt.savefig(save_file)
-    plt.show()
+#     plt.show()
 
 make_plot(price, recommendation, symbol)

@@ -1,11 +1,23 @@
 #!/bin/bash
 
-stonks=('V' 'ISRG' 'AMZN' 'AAPL' 'JNJ' 'PG' 'VTV' 'BRK.B' 'GLD' 'GOOG' 'GBTC' 'ETHE')
+# need the API key in $API_KEY, usually it's in `.envrc`
+[ -f ./.envrc ] && source ./.envrc
+
+stonks=( \
+'BRK.B IVV OZEM PG SCHB V VBR VTI VTV VXUS DIS CCI MDT JEPI BND FDVV VYM SPY VXX' \
+)
+
 # AlphaVantage has a 5 call/min rate limit for free keys
-delay=10     
+delay=9     
+
+rm -Rf analyses/*
+
+# f="${OUTFILE:=signals.csv}"
+l="${SYMS:=$stonks}"
 
 
-for s in ${stonks[@]}; do
-    python3 ./genSymbolReport.py -s $s
+# echo "Symbol,Signal,Date" 
+for s in ${l[@]}; do
+    python3 ./genSymbolReport.py -s $s 
     sleep $delay
 done
