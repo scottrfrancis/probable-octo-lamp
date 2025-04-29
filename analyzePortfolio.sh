@@ -1,5 +1,10 @@
 #!/bin/bash
 
+conda init && conda activate base
+
+# change to the directory of this script
+cd "$(dirname "$0")"
+
 # need the API key in $API_KEY, usually it's in `.envrc`
 [ -f ./.envrc ] && source ./.envrc
 

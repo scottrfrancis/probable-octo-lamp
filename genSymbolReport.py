@@ -186,7 +186,7 @@ def make_plot(price, recommendation, symbol):
     yticks = axs[0].get_yticks()
     axs[0].text(axs[0].get_xticks()[0], yticks[int(len(yticks)*0.65)], s)
 
-    save_file = os.path.join( "analyses", f"{symbol}-{end_date}.pdf")
+    save_file = os.path.join( "analyses", f"{symbol}-{recommendation}-{end_date}.pdf")
     plt.savefig(save_file)
 #     plt.show()
 
